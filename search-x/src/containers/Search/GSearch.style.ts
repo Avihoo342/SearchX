@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
         GoogleSearchDisplay: {},
         GoogleSearchInput: {
             display: "flex",
+            flexDirection:"column",
             zIndex: 3,
             height: "44px",
             backgroundColor: colors.base.white,
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "24px",
             margin: "0 auto",
             width: "auto",
-            maxWidth: "584px",
+            maxWidth: "-webkit-fill-available",
             fieldset: {
                 border: "hidden",
             },
@@ -47,6 +48,26 @@ const useStyles = makeStyles((theme: Theme) =>
                 maxWidth: '500px'
             }
         },
+        allResultsDesign:{
+            display: "flex",
+            flexDirection: "column",
+            listStyleType:"none",
+            backgroundColor: colors.base.white,
+            borderRadius:"0 0 24px 24px",
+            boxShadow:"0 4px 6px rgb(32 33 36 / 28%)",
+            paddingBottom:"4px"
+        },
+        active:{
+            cursor: "pointer",
+            fontWeight:700,
+           backgroundColor:"#eee",
+            listStyleType: 'none'
+        },
+        notActive:{
+            cursor: "pointer",
+            color:colors.base.black,
+            listStyleType: 'none'
+        }
     }),
 );
 
