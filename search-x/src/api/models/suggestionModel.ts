@@ -1,4 +1,6 @@
 export interface suggestionModel {
-    label:string,
+    title:string,
     year?:number,
+    Description?:string,
+    url?:string
 }

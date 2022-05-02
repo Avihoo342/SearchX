@@ -4,7 +4,9 @@ import useStyles from "./GSearch.style";
 import {suggestions} from '../../DB/suggestions'
 import {suggestionModel} from "../../api/models/suggestionModel";
 import SearchIcon from "../../assets/search_icon.png"
-import ReactDOM from "react-dom";
+import XIcon from "../../assets/XIcon.jpg"
+import DisplaySuggestions from "../../components/DisplaySuggestions/DisplaySuggestions";
+import DisplayResults from "../../components/DisplayResults/DisplayResults";
 
 const GSearch: FunctionComponent = () => {
     const classes = useStyles();
@@ -13,31 +15,48 @@ const GSearch: FunctionComponent = () => {
     const [showSuggestions, SetShowSuggestions] = useState(false);
     const [userInput, SetUserInput] = useState("");
     const [suggestionsListComponent, SetsuggestionsListComponent] = useState<any>([]);
+    const [invisibleResults, SetInvisibleResults] = useState(false);
+    const [showResults, SetShowResults] = useState(false);
+    const [Results, SetResults] = useState<suggestionModel[]>([]);
+    const [historyList, SetHistoryList] =useState<suggestionModel[]>([]);
+    const [timeCalc, SetTimeCalc] = useState(0)
     const inputRef = useRef<any>();
 
+    const getResultsBasedOnInput = (userInput: string) => {
+        return suggestions.filter(
+            (suggestion: suggestionModel) =>
+                suggestion.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+        );
+    }
     const handleChange = (e: any) => {
         const userInput = e.currentTarget.value;
-        const filteredSuggestions = suggestions.filter(
-            (suggestion: suggestionModel) =>
-                suggestion.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-        );
+        const filteredSuggestions = getResultsBasedOnInput(userInput);
         SetActiveSuggestion(activeSuggestion)
         SetFilteredSuggestions(filteredSuggestions)
         SetShowSuggestions(true)
         SetUserInput(e.currentTarget.value)
     }
-    const onClick = (e: any) => {
+    const onClickelement = (e: any) => {
+        const list = historyList
+        console.log(e.title)
+        list.push(e.title)
+        SetHistoryList(list)
         SetActiveSuggestion(0)
         SetFilteredSuggestions([])
         SetShowSuggestions(false)
-        SetUserInput(e.currentTarget.innerText)
+        SetUserInput(e.title)
+        var t0 = performance.now();
+        SetResults(getResultsBasedOnInput(userInput));
+        var t1 = performance.now();
+        SetTimeCalc(t1-t0);
+        SetShowResults(true)
     };
 
     const onKeyDown = (e: any) => {
         if (e.keyCode === 13) {
             SetActiveSuggestion(0)
             SetShowSuggestions(false)
-            SetUserInput(filteredSuggestions[activeSuggestion].label)
+            SetUserInput(filteredSuggestions[activeSuggestion].title)
         } else if (e.keyCode === 38) {
             if (activeSuggestion === 0) {
                 return;
@@ -58,63 +77,79 @@ const GSearch: FunctionComponent = () => {
             if (filteredSuggestions.length) {
                 SetsuggestionsListComponent(filteredSuggestions);
             } else {
-
+                SetsuggestionsListComponent([]);
             }
         }
         SetsuggestionsListComponent(suggestionsListComponent)
     }
 
-    const handleMouseOut = (current:any) =>{
-        if (document.activeElement !== ReactDOM.findDOMNode(current)) {
-            //save in memory exist list and hide the existing list
-            console.log("fdsfdsfsdf")
-            SetFilteredSuggestions([]);
-        }
+    const onFocus = () => {
+        SetInvisibleResults(false);
     }
-    useEffect(()=>{
-        if(inputRef.current) inputRef.current?.focus();
-    },[])
+
+    const handleMouseOut = (current: any) => {
+        SetInvisibleResults(true);
+    }
+
+    useEffect(() => {
+        if (inputRef.current) inputRef.current?.focus();
+    }, [])
 
     useEffect(() => {
         render()
-    }, [userInput])
+    })
+
+    const clearHistory= () =>  {
+        var newList=filteredSuggestions.filter(function(itm){
+            return itm.title!==userInput
+        });
+        SetUserInput("");
+        SetHistoryList(newList)
+
+    }
 
     return (
         <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} width={"100%"} alignItems={"center"}
-             marginTop={"20%"}>
-            <Box mb={3}>
+             marginTop={!showResults ? "20%" : "40px"}>
+            <Box className={!showResults ? classes.AlignImageNotResults : classes.AlignImageResults}>
                 <img src={process.env.REACT_APP_GOOGLE_IMAGE}
+                     className={!showResults ? classes.ShowGoogleImage : classes.ShowSideGoogleImage}
                      alt={"Google"}/>
             </Box>
             <Box className={classes.GoogleSearchInput}>
                 <Box>
+                    <view>
+                        <img src={SearchIcon} alt={"search"} className={classes.SearchICon}/>
+                        {userInput.length > 0 &&
+                            <img src={XIcon} alt={"search"} width={"20px"} height={"20px"} className={classes.xIcon}  onClick={clearHistory}/>}
                     <TextField
                         className={classes.GoogleSearchInput}
                         onChange={handleChange}
                         onKeyDown={onKeyDown}
-                        inputProps={{ref:inputRef,
-                            onBlur: () => handleMouseOut(inputRef.current)
+                        inputProps={{
+                            ref: inputRef,
+                            onBlur: () => handleMouseOut(inputRef.current),
+                            onFocus: () => onFocus(),
                         }}
                         value={userInput}
                         id="search"
                         fullWidth
                         autoComplete='off'
-                        label={"Search"}
                         size="small"
+                        key={"InputKey"}
                     >
                     </TextField>
-                    <img src={SearchIcon} alt={"search"} width={"20px"} height={"20px"}/>
+                    </view>
                 </Box>
-                {filteredSuggestions.length > 0 &&
-                    <Box className={classes.allResultsDesign}>
-                        <ul>
-                            {filteredSuggestions.slice(0, Number(process.env.REACT_APP_MAX_ELEMENT_DISPLAY)).map((item, key) => {
-                                return (<li className={key === activeSuggestion? classes.active: classes.notActive} key={key} onClick={onClick}>
-                                    {item.label}
-                                </li>)
-                            })}
-                        </ul>
-                    </Box>
+                {filteredSuggestions.length > 0 && showSuggestions &&
+                    <DisplaySuggestions invisibility={invisibleResults} options={filteredSuggestions}
+                                        funcApply={onClickelement} historyList={historyList}/>
+                }
+            </Box>
+            <Box>
+                {
+                    showResults &&
+                    <DisplayResults results={Results} timeCalc={timeCalc}/>
                 }
             </Box>
         </Box>

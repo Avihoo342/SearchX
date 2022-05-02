@@ -4,13 +4,42 @@ import colors from "../../theme/palette"
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         GoogleSearchDisplay: {},
+        AlignImageNotResults: {
+            marginBottom: "24px"
+        },
+        AlignImageResults: {
+            position: "relative",
+            width: "100%"
+        },
+        ShowGoogleImage: {},
+        ShowSideGoogleImage: {
+            width: '92px',
+            height: '30px',
+            position: "absolute"
+        },
+        SearchICon: {
+            width: "20px",
+            height: "20px",
+            zIndex: 99999,
+            position: "absolute",
+            marginLeft: "95%",
+            marginTop: "10px"
+        },
+        xIcon: {
+            width: "20px",
+            height: "20px",
+            zIndex: 99999,
+            position: "absolute",
+            marginLeft: "90%",
+            marginTop: "10px"
+        },
         GoogleSearchInput: {
             display: "flex",
-            flexDirection:"column",
+            flexDirection: "column",
             zIndex: 3,
+            position: 'relative',
             height: "44px",
             backgroundColor: colors.base.white,
-            border: `solid 1px ${colors.base.gray}`,
             borderRadius: "24px",
             margin: "0 auto",
             width: "auto",
@@ -18,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fieldset: {
                 border: "hidden",
             },
-            "&.MuiTextField-root":{
+            "&.MuiTextField-root": {
                 border: `solid 1px ${colors.base.gray}`,
                 borderRadius: "24px",
                 width: "584px",
@@ -48,24 +77,33 @@ const useStyles = makeStyles((theme: Theme) =>
                 maxWidth: '500px'
             }
         },
-        allResultsDesign:{
+        allResultsDesign: {
             display: "flex",
             flexDirection: "column",
-            listStyleType:"none",
+            listStyleType: "none",
             backgroundColor: colors.base.white,
-            borderRadius:"0 0 24px 24px",
-            boxShadow:"0 4px 6px rgb(32 33 36 / 28%)",
-            paddingBottom:"4px"
+            borderRadius: "0 0 24px 24px",
+            boxShadow: "0 4px 6px rgb(32 33 36 / 28%)",
+            paddingBottom: "4px",
         },
-        active:{
+        InList: {
+            color: colors.warning.yellowBackground
+        },
+        NotInList: {
+            color: colors.base.black
+        },
+        hide: {
+            visibility: "hidden",
+        },
+        active: {
             cursor: "pointer",
-            fontWeight:700,
-           backgroundColor:"#eee",
+            fontWeight: 700,
+            backgroundColor: "#eee",
             listStyleType: 'none'
         },
-        notActive:{
+        notActive: {
             cursor: "pointer",
-            color:colors.base.black,
+            color: colors.base.black,
             listStyleType: 'none'
         }
     }),
