@@ -2,6 +2,7 @@ import React, {FunctionComponent} from "react";
 import {Box} from "@mui/material";
 import {suggestionModel} from "../../api/models/suggestionModel";
 import useStyles from "../../containers/Search/GSearch.style";
+import SearchIcon from "../../assets/search_icon.png"
 
 interface Props {
     options:suggestionModel[]
@@ -12,8 +13,10 @@ interface Props {
 
 const DisplaySuggestions: FunctionComponent<Props> = ({options,funcApply, invisibility, historyList}:Props) => {
     const classes = useStyles();
-    const IsInHistoryList = (historyList:suggestionModel[], option:string) =>{
-        const res = historyList.filter((item) => item.title === option)
+    console.log(historyList)
+    const IsInHistoryList = (historyList:any[], option:string) =>{
+        const res = historyList.filter((item) => item === option)
+        console.log(res.length)
         if(res.length > 0)
             return true
         return false
@@ -23,6 +26,7 @@ const DisplaySuggestions: FunctionComponent<Props> = ({options,funcApply, invisi
                 <ul>
                     {options.map((option:any,e:any) => {
                         return (
+
                             <li
                                 key={e}
                                 className={IsInHistoryList(historyList, option.title)?classes.InList:classes.NotInList}
@@ -31,7 +35,8 @@ const DisplaySuggestions: FunctionComponent<Props> = ({options,funcApply, invisi
                                     funcApply(option)
                                 }}
                             >
-                                <span>{option.title}</span>
+                                <img src={SearchIcon} alt={"search"} width={"20px"} height={"20px"}/>
+                                <span>{" "}{option.title}</span>
                             </li>
                         );
                     })}

@@ -12,9 +12,9 @@ interface Props {
 const DisplayResults: FunctionComponent<Props> = ({results, timeCalc}:Props) => {
     const classes = useStyles();
     return (
-        <Box key={"InputKey"}>
-            <Box>{timeCalc}</Box>
-            <ul  key={"InputKey"}>
+        <Box>
+            <Box>{`time to calculate : ${timeCalc}`}</Box>
+            <ul>
                 {results.map((option:suggestionModel,e:any) => {
                     return (
                         <li

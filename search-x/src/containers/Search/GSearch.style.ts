@@ -87,9 +87,13 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: "4px",
         },
         InList: {
-            color: colors.warning.yellowBackground
+            listStyleType:"none",
+            fontSize:"16px",
+            color: colors.base.InList
         },
         NotInList: {
+            listStyleType:"none",
+            fontSize:"16px",
             color: colors.base.black
         },
         hide: {

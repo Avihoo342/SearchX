@@ -6,6 +6,7 @@ const palette = {
         gray: "#dfe1e5",
         header: '#353535',
         strongGray: '#656565',
+        InList:"#52188c",
     },
     primary: {
     },

@@ -26,7 +26,7 @@ const GSearch: FunctionComponent = () => {
         return suggestions.filter(
             (suggestion: suggestionModel) =>
                 suggestion.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-        );
+        ).slice(0,Number(process.env.REACT_APP_MAX_ELEMENT_DISPLAY));
     }
     const handleChange = (e: any) => {
         const userInput = e.currentTarget.value;
@@ -100,8 +100,8 @@ const GSearch: FunctionComponent = () => {
     })
 
     const clearHistory= () =>  {
-        var newList=filteredSuggestions.filter(function(itm){
-            return itm.title!==userInput
+        var newList=historyList.filter(function(itm:any){
+            return itm!==userInput
         });
         SetUserInput("");
         SetHistoryList(newList)
