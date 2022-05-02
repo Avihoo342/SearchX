@@ -15,7 +15,8 @@ export const suggestions = [
     },
     {title: 'The Shawshank Redemption', Description: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.Two imprisoned men bond over a numbe"
     ,url:"https://www.imdb.com/title/tt0111161/"},
-    {title: 'The Godfather'},
+    {title: 'The Godfather', Description: "The Godfather is a 1972 American crime film directed by Francis Ford Coppola, who co-wrote the screenplay with Mario Puzo, based on Puzo's best-selling 1969 "
+            ,url:"https://en.wikipedia.org/wiki/The_Godfather"},
     {title: 'The Godfather: Part II'},
     {title: 'The Dark Knight'},
     {title: '12 Angry Men'},
