@@ -38,16 +38,15 @@ const GSearch: FunctionComponent = () => {
     }
     const onClickelement = (e: any) => {
         const list = historyList
-        console.log(e.title)
         list.push(e.title)
         SetHistoryList(list)
         SetActiveSuggestion(0)
         SetFilteredSuggestions([])
         SetShowSuggestions(false)
         SetUserInput(e.title)
-        var t0 = performance.now();
+        let t0 = performance.now();
         SetResults(getResultsBasedOnInput(userInput));
-        var t1 = performance.now();
+        let t1 = performance.now();
         SetTimeCalc(t1-t0);
         SetShowResults(true)
     };
