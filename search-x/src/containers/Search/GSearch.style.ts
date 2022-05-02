@@ -89,10 +89,12 @@ const useStyles = makeStyles((theme: Theme) =>
         InList: {
             listStyleType:"none",
             fontSize:"16px",
+            cursor:"pointer",
             color: colors.base.InList
         },
         NotInList: {
             listStyleType:"none",
+            cursor:"pointer",
             fontSize:"16px",
             color: colors.base.black
         },
