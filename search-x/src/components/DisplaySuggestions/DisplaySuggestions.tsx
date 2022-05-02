@@ -19,8 +19,8 @@ const DisplaySuggestions: FunctionComponent<Props> = ({options,funcApply, invisi
         return false
     }
     return (
-        <Box className={invisibility? classes.hide: classes.allResultsDesign}  key={"InputKey"}>
-                <ul  key={"InputKey"}>
+        <Box className={invisibility? classes.hide: classes.allResultsDesign}>
+                <ul>
                     {options.map((option:any,e:any) => {
                         return (
                             <li
