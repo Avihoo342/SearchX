@@ -1,34 +1,33 @@
-import React, {FunctionComponent, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Box, TextField} from "@mui/material";
 import useStyles from "./GSearch.style";
 import {suggestions} from '../../DB/suggestions'
-import {suggestionModel} from "../../api/models/suggestionModel";
 import SearchIcon from "../../assets/search_icon.png"
 import XIcon from "../../assets/XIcon.jpg"
 import DisplaySuggestions from "../../components/DisplaySuggestions/DisplaySuggestions";
 import DisplayResults from "../../components/DisplayResults/DisplayResults";
 
-const GSearch: FunctionComponent = () => {
+const GSearch = () => {
     const classes = useStyles();
     const [activeSuggestion, SetActiveSuggestion] = useState(0);
-    const [filteredSuggestions, SetFilteredSuggestions] = useState<suggestionModel[]>([]);
+    const [filteredSuggestions, SetFilteredSuggestions] = useState([]);
     const [showSuggestions, SetShowSuggestions] = useState(false);
     const [userInput, SetUserInput] = useState("");
-    const [suggestionsListComponent, SetsuggestionsListComponent] = useState<any>([]);
+    const [suggestionsListComponent, SetsuggestionsListComponent] = useState([]);
     const [invisibleResults, SetInvisibleResults] = useState(false);
     const [showResults, SetShowResults] = useState(false);
-    const [Results, SetResults] = useState<suggestionModel[]>([]);
-    const [historyList, SetHistoryList] =useState<suggestionModel[]>([]);
+    const [Results, SetResults] = useState([]);
+    const [historyList, SetHistoryList] =useState([]);
     const [timeCalc, SetTimeCalc] = useState(0)
-    const inputRef = useRef<any>();
+    const inputRef = useRef();
 
-    const getResultsBasedOnInput = (userInput: string) => {
+    const getResultsBasedOnInput = (userInput) => {
         return suggestions.filter(
-            (suggestion: suggestionModel) =>
+            (suggestion) =>
                 suggestion.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1
         ).slice(0,Number(process.env.REACT_APP_MAX_ELEMENT_DISPLAY));
     }
-    const handleChange = (e: any) => {
+    const handleChange = (e) => {
         const userInput = e.currentTarget.value;
         const filteredSuggestions = getResultsBasedOnInput(userInput);
         SetActiveSuggestion(activeSuggestion)
@@ -36,7 +35,7 @@ const GSearch: FunctionComponent = () => {
         SetShowSuggestions(true)
         SetUserInput(e.currentTarget.value)
     }
-    const onClickelement = (e: any) => {
+    const onClickelement = (e) => {
         const list = historyList
         list.push(e.title)
         SetHistoryList(list)
@@ -51,7 +50,7 @@ const GSearch: FunctionComponent = () => {
         SetShowResults(true)
     };
 
-    const onKeyDown = (e: any) => {
+    const onKeyDown = (e) => {
         if (e.keyCode === 13) {
             SetActiveSuggestion(0)
             SetShowSuggestions(false)
@@ -86,7 +85,7 @@ const GSearch: FunctionComponent = () => {
         SetInvisibleResults(false);
     }
 
-    const handleMouseOut = (current: any) => {
+    const handleMouseOut = (current) => {
         SetInvisibleResults(true);
     }
 
@@ -99,7 +98,7 @@ const GSearch: FunctionComponent = () => {
     })
 
     const clearHistory= () =>  {
-        var newList=historyList.filter(function(itm:any){
+        var newList=historyList.filter(function(itm){
             return itm!==userInput
         });
         SetUserInput("");

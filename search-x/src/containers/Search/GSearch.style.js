@@ -1,7 +1,7 @@
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import {makeStyles, createStyles} from '@material-ui/core/styles';
 import colors from "../../theme/palette"
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
     createStyles({
         GoogleSearchDisplay: {},
         AlignImageNotResults: {

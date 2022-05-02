@@ -1,21 +1,16 @@
-import React, {FunctionComponent} from "react";
+import React from "react";
 import {Box, Typography} from "@mui/material";
-import {suggestionModel} from "../../api/models/suggestionModel";
 import useStyles from "../../containers/Search/GSearch.style";
 import {Link} from "@material-ui/core";
 
-interface Props {
-    results:suggestionModel[]
-    timeCalc:number
-}
 
-const DisplayResults: FunctionComponent<Props> = ({results, timeCalc}:Props) => {
+const DisplayResults= ({results, timeCalc}) => {
     const classes = useStyles();
     return (
         <Box>
             <Box>{`time to calculate : ${timeCalc}`}</Box>
             <ul>
-                {results.map((option:suggestionModel,e:any) => {
+                {results.map((option,e) => {
                     return (
                         <li
                             key={e}
