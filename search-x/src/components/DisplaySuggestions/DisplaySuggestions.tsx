@@ -13,13 +13,9 @@ interface Props {
 
 const DisplaySuggestions: FunctionComponent<Props> = ({options,funcApply, invisibility, historyList}:Props) => {
     const classes = useStyles();
-    console.log(historyList)
     const IsInHistoryList = (historyList:any[], option:string) =>{
         const res = historyList.filter((item) => item === option)
-        console.log(res.length)
-        if(res.length > 0)
-            return true
-        return false
+        return res.length > 0
     }
     return (
         <Box className={invisibility? classes.hide: classes.allResultsDesign}>
