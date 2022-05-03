@@ -1,11 +1,10 @@
 import React from "react";
 import {Box, Typography} from "@mui/material";
-import useStyles from "../../containers/Search/GSearch.style";
 import {Link} from "@material-ui/core";
 
 
 const DisplayResults= ({results, timeCalc}) => {
-    const classes = useStyles();
+    //const classes = useStyles(); - later work can do styling here
     return (
         <Box>
             <Box>{`time to calculate : ${timeCalc}`}</Box>

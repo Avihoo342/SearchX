@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Box, TextField} from "@mui/material";
 import useStyles from "./GSearch.style";
-import {suggestions} from '../../DB/suggestions'
 import SearchIcon from "../../assets/search_icon.png"
 import XIcon from "../../assets/XIcon.jpg"
 import DisplaySuggestions from "../../components/DisplaySuggestions/DisplaySuggestions";
 import DisplayResults from "../../components/DisplayResults/DisplayResults";
+import requestsApi from "../../api/requestsApi";
 
 const GSearch = () => {
     const classes = useStyles();
@@ -21,15 +21,16 @@ const GSearch = () => {
     const [timeCalc, SetTimeCalc] = useState(0)
     const inputRef = useRef();
 
-    const getResultsBasedOnInput = (userInput) => {
-        return suggestions.filter(
-            (suggestion) =>
-                suggestion.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-        ).slice(0,Number(process.env.REACT_APP_MAX_ELEMENT_DISPLAY));
+    const getResultsBasedOnInput = async (userInput) => {
+       // return suggestions.filter(
+        //    (suggestion) =>
+         //       suggestion.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+       // ).slice(0,Number(process.env.REACT_APP_MAX_ELEMENT_DISPLAY));
+        return await requestsApi.Search(userInput)
     }
     const handleChange = (e) => {
         const userInput = e.currentTarget.value;
-        const filteredSuggestions = getResultsBasedOnInput(userInput);
+        const filteredSuggestions = getResultsBasedOnInput(userInput)
         SetActiveSuggestion(activeSuggestion)
         SetFilteredSuggestions(filteredSuggestions)
         SetShowSuggestions(true)
@@ -116,7 +117,6 @@ const GSearch = () => {
             </Box>
             <Box className={classes.GoogleSearchInput}>
                 <Box>
-                    <view>
                         <img src={SearchIcon} alt={"search"} className={classes.SearchICon}/>
                         {userInput.length > 0 &&
                             <img src={XIcon} alt={"search"} width={"20px"} height={"20px"} className={classes.xIcon}  onClick={clearHistory}/>}
@@ -137,7 +137,6 @@ const GSearch = () => {
                         key={"InputKey"}
                     >
                     </TextField>
-                    </view>
                 </Box>
                 {filteredSuggestions.length > 0 && showSuggestions &&
                     <DisplaySuggestions invisibility={invisibleResults} options={filteredSuggestions}
