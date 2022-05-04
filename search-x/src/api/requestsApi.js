@@ -12,6 +12,7 @@ class requestsApi {
             async (config) => {
                 config.headers = {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
                 }
                 return config;
             },
